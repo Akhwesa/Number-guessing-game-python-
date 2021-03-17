@@ -1,3 +1,10 @@
+#Our game is a number guessing game
+#import random number for to use
+#use tkinter for our GUI
+#Users inputs their name first
+#then chooses difficulty of Easy of 1-10 range or Hard 1-100 range
+#Every time a user’s guess is wrong they are prompted with more hints, The hint include any math clue like multiples, divisible, greater or smaller
+#print hints at the cost of reducing the score.
 import random
 import os
 from os import name
@@ -61,7 +68,6 @@ def try_again():
    canvas1.create_window(150, 150, window=button1)
 
 #calculate game scores
-
 def score():
     average_score = tk.average_score
     if len(tries) == average_score:
@@ -69,7 +75,7 @@ def score():
             tk.score = sum(average_score)
         tk.Label(window, Text='' + str(score) + 'points')
     return [(average_score(Hard(window,master=difficulty)), Easy(window,master=difficulty)) in map(average_score, average_score(window.tk.call( difficulty())))]
-
+#Defining the two difficulty levels E(Easy) or H(hard)
 class Level(tk.Frame):
     global average_score
     global difficulty
