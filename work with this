@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+#Our game is a number guessing game
+#import random number for to use
+#use tkinter for our GUI
+#Users inputs their name first
+#then chooses difficulty of Easy of 1-10 range or Hard 1-100 range
+#Every time a user’s guess is wrong they are prompted with more hints, The hint include any math clue like multiples, divisible, greater or smaller
+#print hints at the cost of reducing the score.
+import random
+import os
+from os import name
+import tkinter as tk
+from tkinter import messagebox
+#window initializing
+window = tk.Tk()
+window.title("Number Guessing Game")
+window.geometry("600x500")
+window.configure(bg='#74eb34')
+
+
+#inputs and prints name
+def intro():
+ label = tk.Label(window, text="Hello! What is your name?", bg='#74eb34', font='bold')
+ label.pack(side = 'left')
+ username = tk.Entry(window, text = 'Username')
+ username.pack(side= 'right')
+ # welcoming button
+ welcome = tk.Button (window, text="Continue", command= difficulty)
+ welcome.pack()
+canvas1 = tk.Canvas(window, width = 300, height = 300)
+canvas1.pack()
+
+#choosing difficulty level to play
+def difficulty():
+    while True:
+                difficultylabel = tk.Label(window, text='Type E or H for Easy (1-10) or Hard (1-100) number range:\n')
+                difficultylabel.pack()
+                difficulty.selfEntry = tk.Entry(window)
+                difficulty.selfEntry.pack(side=tk.RIGHT)
+
+                if difficulty.selfEntry == "E":
+                    tk.score = 250
+                    tk.Label(window, text='Congratulations.' + str(tk.score) + 'points Awarded!')
+                    Frame.Easy.get()
+                if difficulty.selfEntry == "H":
+                    tk.score = 700
+                    tk.Label(window, text='Congratulations.' + str(tk.score) + 'points Awarded!')
+                    Frame.Hard.get()
+                else:
+                    tk.Label(window, text='Incorrect Input.Type E or H')
+
+
+#end or retry the game
+def try_again():
+   tk.messagebox.askquestion('Exit Application', 'Are you sure you want to exit the game',icon='warning')
+   if messagebox == 'yes':
+       window.destroy()
+   else:
+        tk.messagebox.showinfo('Return', 'Game will restart')
+   button1 = tk.Button(window, text='Try_Again', command=difficulty, bg='brown', fg='white')
+   button1.pack()
+
+class Level(tk.Frame):
+    # playing Easy level 1 to 10
+ def Easy(self, master):
+    Frame.Easy(self,master)
+    tries = 4
+    average_score = 250
+    number = random.randint(1, 10)
+    p =tk.Label(window, text='Am thinking of a number,between 1 to 10. Take a Guess!')
+    p.pack()
+    try:
+        while average_score > 49:
+            guess = int(input('What is your Guess?'))
+            if guess == number:
+                p = tk.Label(window, text='Congratulations. You guessed Correctly, new score is'  +str(average_score)+ 'points')
+                p.pack()
+                btn = tk.Button(window, text="playAgain",command=Frame.try_again)
+                btn.pack()
+                Frame.try_again()
+            elif guess > number:
+                average_score = average_score - 50
+                p =tk.Label(window, text='You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.')
+                p.pack()
+                p = tk.Label(window, text='Your guess is Greater than mine!')
+                p.pack()
+            if average_score <= 49:
+                label =tk.Label(window, text='Out of Points, The number i was thinking is,' +str(number)+'.')
+                label.pack()
+                Frame.try_again()
+            elif guess < number:
+                    average_score = average_score - 50
+                    label = tk.Label(window, Text='Your guess is Smaller than mine')
+                    label.pack()
+                    label= tk.Label(window, Text='You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.')
+                    label.pack()
+            if average_score <= 49:
+                        label = tk.Label(window, text='Out of Points, The number i was thinking is,' + str(number) + '.')
+                        label.pack()
+                        Frame.try_again()
+            elif guess % number == 2:
+                        average_score = average_score - 50
+                        label = tk.Label(window, Text='Your guess is Divisible with mine')
+                        label.pack()
+                        label= tk.Label(window, Text='You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.')
+                        label.pack()
+            if average_score <= 49:
+                            label = tk.Label(window, text='Out of Points, The number i was thinking is,' + str(number) + '.')
+                            label.pack()
+                            Frame.try_again()
+            elif guess * 3 == number:
+                            average_score = average_score - 50
+                            label = tk.Label('Your guess is a multiple of mine')
+                            label.pack()
+                            label= tk.Label(window, Text='You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.')
+                            label.pack()
+            if average_score <= 49:
+                              p = tk.Label(window, text='Out of Points, The number i was thinking is,' + str(number) + '.')
+                              p.pack()
+                              Frame.try_again()
+    except ValueError:
+        label =tk.Label(window, Text='Only Integers Allowed!')
+        label.pack()
+        try_again()
+
+
+#playing Hard level 1 to 100
+def Hard(self, master):
+    Frame.Hard(self, master)
+    average_score = 700
+    tries = 7
+    number = random.randint(1, 100)
+    label = tk.Label (window, text='You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.')
+    label.pack()
+    label = tk.Label(window, text='Am thinking of a number,between 1 to 100. Take a Guess!')
+    label.pack()
+    try:
+      while average_score >= 99:
+        guess = int(input('What is your Guess?'))
+        if guess == number:
+            label = tk.Label(window, text ='Congratulations. You guessed Correctly, new score is ' + str(average_score) + 'points')
+            label.pack()
+            try_again()
+        elif guess > number:
+            average_score = average_score - 100
+            p=tk.Label(window, Text='Your guess is Greater than mine!')
+            p.pack()
+            label= tk.Label(window, Text='You have ' + str(average_score) + 'points')
+            label.pack()
+        if average_score <= 99:
+            label = tk.Label(window,text='Out of Points, The number i was thinking is,' + str(number.get()) + '.')
+            label.pack()
+            label = tk.Label(window, text=number).pack()
+            label.pack()
+            window.try_again()
+        elif guess < number:
+                average_score = average_score - 100
+                label = tk.Label(window, Text='Your guess is Smaller than mine')
+                label.pack()
+                label= tk.Label(window, Text='you have ' + str(average_score) + 'points')
+                label.pack()
+        if average_score <= 99:
+                label = tk.Label(window,text='Out of Points, The number i was thinking is,' + str(number.get()) + '.')
+                label.pack()
+                label = tk.Label(window, text=number).pack()
+                label.pack()
+                window.try_again()
+        elif guess % number == 2:
+                 average_score = average_score - 100
+                 label =tk.Label(window, Text='Your guess is Divisible with mine')
+                 label.pack()
+                 label= tk.Label(window, Text='you have' + str(average_score) + 'points')
+                 label.pack()
+        if average_score <= 99:
+                 label  = tk.Label(window, text='Out of Points, The number i was thinking is,' + str( number.get()) + '.')
+                 label.pack()
+                 window.try_again()
+        elif guess * 3 == number:
+                 average_score =average_score - 100
+                 label=  tk.Label(window,Text='Your guess is a multiple of mine')
+                 label.pack()
+                 label= tk.Label('you have' + str(average_score) + 'points')
+                 label.pack()
+        if average_score <= 99:
+                label =  tk.Label(window, text='Out of Points, The number i was thinking is,' + str(number.get()) + '.')
+                label.pack()
+                label = tk.Label(window, text=number).pack()
+                label.pack()
+                Frame.try_again()
+    except ValueError:
+        p = tk.Label(window, Text='Only Integers Allowed!')
+        p.pack()
+        Frame.try_again()
+class Frame(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(window)
+
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
+
+window.mainloop()
