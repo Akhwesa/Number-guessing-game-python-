@@ -1,0 +1,158 @@
+import random
+from os import name
+
+#the main
+def main():
+   Intro()
+   guessNumber()
+   try_again()
+#welcoming
+def Intro():
+   print('Hello,What is your Name?')
+# inputs and prints name
+   name = input('Enter Your Name')
+   print ('Hello',name)
+
+
+#end or retry the game
+def try_again():
+
+    again = input('Do you wish to try again?YES/NO')
+    if again == 'YES':
+        guessNumber()
+    elif again == 'NO':
+        print('Thanks For playing')
+        exit()
+    else:
+        print('Invalid Input')
+        try_again()
+
+
+#choosing difficulty level to play
+
+def guessNumber():
+    difficulty()
+def difficulty():
+      while True:
+          difficulty.self = input('Type E or H for Easy (1-10) or Hard (1-100) number range:\n')
+          if difficulty.self == "E":
+           average_score = 250
+           print('Congratulations.' + str(average_score) + 'points Awarded!')
+           Easy()
+          if difficulty.self == "H":
+              average_score = 700
+              print('Congratulations.' + str(average_score) + 'points Awarded!')
+              Hard()
+          else:
+              print('Incorrect Input.Type E or H')
+              guessNumber()
+
+#playing Easy level 1 to 10
+
+def Easy():
+
+    tries = 4
+    average_score = 250
+    number = random.randint(1, 10)
+    print('You have ' + str(tries) + 'attempts left.')
+    print('Am thinking of a number,between 1 to 10. Take a Guess!')
+    try:
+        while average_score > 49 :
+            guess = int(input('What is your Guess?'))
+            tries -= 1
+            if guess == number:
+                print('Congratulations. You guessed Correctly, new score is ' + str(average_score) + 'points')
+                print('Play Again')
+                try_again()
+            elif guess > number:
+                average_score = average_score - 50
+                print('Your guess is Greater than mine!')
+                print('You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.' )
+            if average_score <= 49:
+                print('The number i was thinking is..' + str(number) + '.')
+                print('Game Over')
+                try_again()
+            elif guess < number:
+                 average_score = average_score - 50
+                 print('Your guess is Smaller than mine')
+                 print('You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.' )
+            if average_score <= 49:
+                 print('The number i was thinking is..' + str(number) + '.')
+                 print('Game Over')
+                 try_again()
+            elif guess % number == 2:
+                 average_score = average_score - 50
+                 print('Your guess is Divisible with mine')
+                 print('You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.' )
+            if average_score <= 49:
+                 print('The number i was thinking is..' + str(number) + '.')
+                 print('Game Over')
+            elif guess * 3 == number:
+                 average_score = average_score - 50
+                 print('Your guess is a multiple of mine')
+                 print('You have ' + str(average_score) + 'points and ' +str(tries)+ 'attempts left.' )
+            if average_score <= 49:
+                 print('The number i was thinking is..' + str(number) + '.')
+                 print('Game Over')
+                 try_again()
+    except ValueError:
+        print('Only Integers Allowed!')
+        guessNumber()
+
+
+#playing Hard level 1 to 100
+def Hard():
+
+    tries = 7
+    average_score = 700
+    number = random.randint(1, 100)
+    print('You have'+ str(tries) + 'attempts left.')
+    print('Am thinking about a number, between 1 to 100. Take a Guess!')
+    try:
+        while average_score > 99:
+            guess = int(input('What is your Guess?'))
+            tries -= 1
+            average_score = average_score - 100
+            if guess == number:
+               print('Congratulations. You guessed Correctly, new score is ' + str(average_score) + 'points')
+               print('Play Again')
+
+            elif guess > number:
+                average_score = average_score - 100
+                print('Your guess is Greater than mine!')
+                print('You have ' + str(average_score) + 'points')
+            if average_score <= 99:
+                print('The number i was thinking is..' + str(number) + '.')
+                print('Game Over')
+                try_again()
+            elif guess < number:
+                average_score = average_score - 100
+                print('Your guess is Smaller than mine')
+                print('you have ' + str(average_score) + 'points')
+            if average_score <= 99:
+                print('The number i was thinking is..' + str(number) + '.')
+                print('Game Over')
+                try_again()
+            elif guess % number == 2:
+                average_score = average_score - 100
+                print('Your guess is Divisible with mine')
+                print('you have' + str(average_score) + 'points')
+            if average_score <= 99:
+                print('The number i was thinking is..' + str(number) + '.')
+                print('Game Over')
+                try_again()
+            elif guess * 3 == number:
+                 average_score =average_score - 100
+                 print('Your guess is a multiple of mine')
+                 print('you have' + str(average_score) + 'points')
+            if average_score <= 99:
+                 print('The number i was thinking is..' + str(number) + '.')
+                 print('Game Over')
+                 try_again()
+    except ValueError:
+        print('Only Integers Allowed!')
+        guessNumber()
+
+# calculate game scores
+
+main()
